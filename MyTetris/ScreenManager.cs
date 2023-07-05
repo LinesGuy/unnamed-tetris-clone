@@ -13,7 +13,7 @@ namespace MyTetris
         public static Stack<Screen> Screens = new Stack<Screen>();
         public static void Update(GameTime gameTime)
         {
-
+            Screens.Peek().Update(gameTime);
         }
         public static void Draw(SpriteBatch spriteBatch)
         {

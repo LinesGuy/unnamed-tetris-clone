@@ -6,11 +6,13 @@ namespace MyTetris
 {
     public class GameRoot : Game
     {
+        public static GameRoot Instance;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public Point ScreenSize = new Point(1366, 768);
         public GameRoot()
         {
+            Instance = this;
             _graphics = new GraphicsDeviceManager(this);
             _graphics.PreferredBackBufferWidth = ScreenSize.X;
             _graphics.PreferredBackBufferHeight = ScreenSize.Y;
@@ -33,6 +35,7 @@ namespace MyTetris
 
         protected override void Update(GameTime gameTime)
         {
+            InputManager.Update();
             ScreenManager.Update(gameTime);
             base.Update(gameTime);
         }
