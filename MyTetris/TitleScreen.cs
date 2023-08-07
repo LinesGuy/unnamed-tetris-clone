@@ -18,6 +18,7 @@ namespace MyTetris
             _buttons.Buttons.Add(new Button("START", () => ScreenManager.Screens.Push(new GameScreen())));
             // Options button
             _buttons.Buttons.Add(new Button("EXIT", () => GameRoot.Instance.Exit()));
+            Assets.Ready.Play();
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

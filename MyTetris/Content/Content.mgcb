@@ -34,6 +34,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Nullpomino.spritefont
 
+#begin SoundEffects/SEP_ready.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/SEP_ready.wav
+
 #begin Textures/Pixel.png
 /importer:TextureImporter
 /processor:TextureProcessor

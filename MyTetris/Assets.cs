@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace MyTetris
         public static Texture2D Pixel;
         public static Texture2D TileBlank_16;
         public static Texture2D TileBlank_32;
+        public static SoundEffect Ready;
         public static void Load(ContentManager content)
         {
             NovaSquare24 = content.Load<SpriteFont>("Fonts/NovaSquare24");
@@ -24,6 +26,7 @@ namespace MyTetris
             Pixel = content.Load<Texture2D>("Textures/Pixel");
             TileBlank_16 = content.Load<Texture2D>("Textures/TileBlank_16");
             TileBlank_32 = content.Load<Texture2D>("Textures/TileBlank_32");
+            Ready = content.Load<SoundEffect>("SoundEffects/SEP_ready");
         }
     }
 }

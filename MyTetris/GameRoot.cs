@@ -23,8 +23,8 @@ namespace MyTetris
 
         protected override void Initialize()
         {
-            ScreenManager.Screens.Push(new TitleScreen());
             base.Initialize();
+            ScreenManager.Screens.Push(new TitleScreen());
         }
 
         protected override void LoadContent()
