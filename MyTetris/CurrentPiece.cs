@@ -9,7 +9,7 @@ namespace MyTetris
     {
         private TetrisGame _game;
         public int Id;
-        private int Orientation;
+        public int Orientation;
         public int SubTiles; // Used in gravity calculations, 65536 sub-tiles = 1 full tile
         public int GroundedFrames; // Number of frames the piece has been touching the ground without moving
         public int AppearanceDelay; // The number of frames to wait until spawning the next piece. If this is 0 then the piece is active and can be moved, if this is above 0 then the player will not be able to move any piece.
@@ -74,6 +74,8 @@ namespace MyTetris
             if (InputManager.Keyboard.IsKeyDown(Keys.X)) {
                 Orientation = 1;
             }
+            // Play SFX of next piece
+            Assets.Mino[_game.NextPieces.Pieces.Peek()].Play();
             return CanFit(Position.X, Position.Y, Orientation);
         }
         /// <summary>
@@ -103,25 +105,41 @@ namespace MyTetris
             return true;
         }
         /// <summary>
-        /// Tries to move the piece by the relative amount and relative rotation. If a rotation is given but does not initially work, the kick tables will be applied which may succeed.
+        /// Tries to move the piece by the relative amount.
         /// </summary>
         /// <param name="rel_x"></param>
         /// <param name="rel_y"></param>
-        /// <param name="rotation"></param>
-        /// <returns>Whether or not the move was successful, including if the piece was kicked.</returns>
-        public bool TryMove(int rel_x, int rel_y, int rotation) {
-            int new_orientation = Orientation + rotation;
-            if (new_orientation < 0) new_orientation += 4;
-            if (new_orientation >= 4) new_orientation -= 4;
-            // First attempt without any wall kicks
-            if (CanFit(Position.X + rel_x, Position.Y + rel_y, new_orientation))
-            {
+        /// <returns>Whether or not the move was successful.</returns>
+        public bool TryMove(int rel_x, int rel_y) {
+            if (CanFit(Position.X + rel_x, Position.Y + rel_y, Orientation)) {
                 Position.X += rel_x;
                 Position.Y += rel_y;
-                Orientation = new_orientation;
                 return true;
             }
+            return false;
+        }
+        /// <summary>
+        /// Tries to rotate the piece by the given direction. If the basic rotation fails, a kick table is used.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns>Whether or not the rotation was successful, including if the kick table was used.</returns>
+        public bool TryRotate(int direction) {
+            // For rotations, we use a kick table
+            // The first kick in each row of kicks is always a "basic rotation", which is no kick at all
+            Point[] kicks = PieceData.WallkickData(Id, Orientation, direction);
 
+            int new_orientation = Orientation + direction;
+            if (new_orientation < 0) new_orientation += 4;
+            if (new_orientation >= 4) new_orientation -= 4;
+
+            foreach (Point kick in kicks) {
+                if (CanFit(Position.X + kick.X, Position.Y + kick.Y, new_orientation)) {
+                    Position.X += kick.X;
+                    Position.Y += kick.Y;
+                    Orientation = new_orientation;
+                    return true;
+                }
+            }
             return false;
         }
         /// <summary>
@@ -131,7 +149,7 @@ namespace MyTetris
             SubTiles += _game.LevelManager.Gravity;
             while (SubTiles >= 65536) {
                 SubTiles -= 65536;
-                TryMove(0, 1, 0);
+                TryMove(0, 1);
             }
         }
         public void Update(GameTime gameTime)
@@ -177,33 +195,33 @@ namespace MyTetris
             }
 
             if (InputManager.WasKeyJustDown(Keys.Left)) {
-                TryMove(-1, 0, 0); // Shift left
+                TryMove(-1, 0); // Shift left
             }
                 
             if (InputManager.WasKeyJustDown(Keys.Right)) {
-                TryMove(1, 0, 0); // Shift right
+                TryMove(1, 0); // Shift right
             }
 
             if (AutoRepeatDelay <= 0) {
                 if (_game.LevelManager.ARR == 0) {
                     // In the specific case that ARR is 0, just move the piece to the side until it hits something
-                    while (TryMove(AutoRepeatDirection, 0, 0)) { }
+                    while (TryMove(AutoRepeatDirection, 0)) { }
                 } else {
-                    TryMove(AutoRepeatDirection, 0, 0);
+                    TryMove(AutoRepeatDirection, 0);
                     AutoRepeatDelay = _game.LevelManager.ARR;
                 }
             }
 
             if (InputManager.WasKeyJustDown(Keys.Z)) // CCW rotation
-                TryMove(0, 0, -1);
+                TryRotate(-1);
             if (InputManager.WasKeyJustDown(Keys.X)) // CW rotation
-                TryMove(0, 0, 1);
+                TryRotate(1);
 
             if (InputManager.Keyboard.IsKeyDown(Keys.Down)) // Soft drop
-                TryMove(0, 1, 0);
+                TryMove(0, 1);
             if (InputManager.WasKeyJustDown(Keys.Up))// Hard drop
             {
-                while (TryMove(0, 1, 0)) { }
+                while (TryMove(0, 1)) { }
                 LockPiece();
             } 
             if (InputManager.WasKeyJustDown(Keys.Space)) { // Hold

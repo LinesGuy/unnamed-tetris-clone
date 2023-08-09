@@ -18,6 +18,8 @@ namespace MyTetris
         public static Texture2D TileBlank_16;
         public static Texture2D TileBlank_32;
         public static SoundEffect Ready;
+        public static SoundEffect Go;
+        public static SoundEffect[] Mino;
         public static void Load(ContentManager content)
         {
             NovaSquare24 = content.Load<SpriteFont>("Fonts/NovaSquare24");
@@ -27,6 +29,12 @@ namespace MyTetris
             TileBlank_16 = content.Load<Texture2D>("Textures/TileBlank_16");
             TileBlank_32 = content.Load<Texture2D>("Textures/TileBlank_32");
             Ready = content.Load<SoundEffect>("SoundEffects/SEP_ready");
+            Go = content.Load<SoundEffect>("SoundEffects/SEP_go");
+            List<SoundEffect> MinoList = new List<SoundEffect>();
+            for (int i = 0; i < 7; i++) {
+                MinoList.Add(content.Load<SoundEffect>($"SoundEffects/mino{i}"));
+            }
+            Mino = MinoList.ToArray();
         }
     }
 }

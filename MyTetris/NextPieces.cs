@@ -12,23 +12,23 @@ namespace MyTetris
     {
         private TetrisGame _game;
         private BagRandomizer _bag = new BagRandomizer();
-        private Queue<int> _pieces = new Queue<int>();
+        public Queue<int> Pieces = new Queue<int>();
         public NextPieces(TetrisGame game) { 
             _game = game;
             for (int i = 0; i < 3; i++)
             {
-                _pieces.Enqueue(_bag.Next());
+                Pieces.Enqueue(_bag.Next());
             }
         }
         public int Next()
         {
-            _pieces.Enqueue(_bag.Next());
-            return _pieces.Dequeue();
+            Pieces.Enqueue(_bag.Next());
+            return Pieces.Dequeue();
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             int x_offset = 3;
-            foreach(int piece  in _pieces)
+            foreach(int piece  in Pieces)
             {
                 for (int x = 0; x < 4; x++)
                 {

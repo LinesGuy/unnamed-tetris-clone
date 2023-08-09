@@ -25,6 +25,7 @@ namespace MyTetris
             WriteLine(spriteBatch, $"LineClearFramesToWait: {_game.PlayField.LineClearFramesToWait}", 1);
             WriteLine(spriteBatch, $"GroundedFrames: {_game.CurrentPiece.GroundedFrames}", 2);
             WriteLine(spriteBatch, $"CurrentPiece FramesToWait: {_game.CurrentPiece.AppearanceDelay}", 3);
+            WriteLine(spriteBatch, $"Piece id/orientation: {_game.CurrentPiece.Id}, {_game.CurrentPiece.Orientation}", 4);
         }
     }
 }

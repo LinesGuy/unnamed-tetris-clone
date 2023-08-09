@@ -34,6 +34,54 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Nullpomino.spritefont
 
+#begin SoundEffects/mino0.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino0.wav
+
+#begin SoundEffects/mino1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino1.wav
+
+#begin SoundEffects/mino2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino2.wav
+
+#begin SoundEffects/mino3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino3.wav
+
+#begin SoundEffects/mino4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino4.wav
+
+#begin SoundEffects/mino5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino5.wav
+
+#begin SoundEffects/mino6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/mino6.wav
+
+#begin SoundEffects/SEP_go.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/SEP_go.wav
+
 #begin SoundEffects/SEP_ready.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

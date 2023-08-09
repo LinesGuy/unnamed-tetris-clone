@@ -25,6 +25,7 @@ namespace MyTetris
             StatsManager = new StatsManager(this);
             CurrentPiece = new CurrentPiece(this);
             LevelManager = new LevelManager(this);
+            Assets.Go.Play();
         }
         public void Update(GameTime gameTime) {
             PlayField.Update(gameTime);

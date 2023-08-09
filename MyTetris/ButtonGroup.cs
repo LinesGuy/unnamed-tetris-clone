@@ -33,7 +33,7 @@ namespace MyTetris
                     _selectedIndex = 0;
                 }
             }
-            if (InputManager.WasKeyJustDown(Keys.Space) || InputManager.WasKeyJustDown(Keys.Enter))
+            if (InputManager.WasKeyJustDown(Keys.Enter))
             {
                 Buttons[_selectedIndex].OnClick();
             };
