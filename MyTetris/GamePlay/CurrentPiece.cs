@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace MyTetris
+namespace MyTetris.GamePlay
 {
     public class CurrentPiece
     {
@@ -38,11 +38,13 @@ namespace MyTetris
             if (_game.PlayField.ClearLines())
             {
                 AppearanceDelay = _game.LevelManager.LineARE + _game.LevelManager.LineClear;
-            } else
+            }
+            else
             {
                 AppearanceDelay = _game.LevelManager.ARE;
             }
-            if (_game.Hold.JustHeld == true) {
+            if (_game.Hold.JustHeld == true)
+            {
                 _game.Hold.JustHeld = false;
             }
         }
@@ -53,12 +55,16 @@ namespace MyTetris
         /// <param name="fromHold">Whether or not to spawn the piece from hold. If so, ignore NextPieces and IHS.</param>
         public bool SpawnNewPiece(bool fromHold = false)
         {
-            if (fromHold) {
+            if (fromHold)
+            {
                 Id = _game.Hold.HeldPiece;
-            } else {
+            }
+            else
+            {
                 Id = _game.NextPieces.Next();
                 // Initial Hold System (IHS)
-                if (InputManager.Keyboard.IsKeyDown(Keys.Space)) {
+                if (InputManager.Keyboard.IsKeyDown(Keys.Space))
+                {
                     _game.Hold.SwapHold();
                 }
             }
@@ -68,10 +74,12 @@ namespace MyTetris
             SubTiles = 0;
             AutoRepeatDelay = 0;
             // Initial Rotation System (IRS)
-            if (InputManager.Keyboard.IsKeyDown(Keys.Z)) {
+            if (InputManager.Keyboard.IsKeyDown(Keys.Z))
+            {
                 Orientation = 3;
             }
-            if (InputManager.Keyboard.IsKeyDown(Keys.X)) {
+            if (InputManager.Keyboard.IsKeyDown(Keys.X))
+            {
                 Orientation = 1;
             }
             // Play SFX of next piece
@@ -110,8 +118,10 @@ namespace MyTetris
         /// <param name="rel_x"></param>
         /// <param name="rel_y"></param>
         /// <returns>Whether or not the move was successful.</returns>
-        public bool TryMove(int rel_x, int rel_y) {
-            if (CanFit(Position.X + rel_x, Position.Y + rel_y, Orientation)) {
+        public bool TryMove(int rel_x, int rel_y)
+        {
+            if (CanFit(Position.X + rel_x, Position.Y + rel_y, Orientation))
+            {
                 Position.X += rel_x;
                 Position.Y += rel_y;
                 return true;
@@ -123,7 +133,8 @@ namespace MyTetris
         /// </summary>
         /// <param name="direction"></param>
         /// <returns>Whether or not the rotation was successful, including if the kick table was used.</returns>
-        public bool TryRotate(int direction) {
+        public bool TryRotate(int direction)
+        {
             // For rotations, we use a kick table
             // The first kick in each row of kicks is always a "basic rotation", which is no kick at all
             Point[] kicks = PieceData.WallkickData(Id, Orientation, direction);
@@ -132,10 +143,14 @@ namespace MyTetris
             if (new_orientation < 0) new_orientation += 4;
             if (new_orientation >= 4) new_orientation -= 4;
 
-            foreach (Point kick in kicks) {
-                if (CanFit(Position.X + kick.X, Position.Y + kick.Y, new_orientation)) {
+            foreach (Point kick in kicks)
+            {
+                // Note that we add kick X but subtract kick Y
+                // This is because we use positive Y = down but SRS kick tables use positive Y = up
+                if (CanFit(Position.X + kick.X, Position.Y - kick.Y, new_orientation))
+                {
                     Position.X += kick.X;
-                    Position.Y += kick.Y;
+                    Position.Y -= kick.Y;
                     Orientation = new_orientation;
                     return true;
                 }
@@ -145,9 +160,11 @@ namespace MyTetris
         /// <summary>
         /// Adds the current gravity level according to the game's speed level and moves the piece down the appropriate number of tiles (which may be none)
         /// </summary>
-        private void ApplyGravity() {
+        private void ApplyGravity()
+        {
             SubTiles += _game.LevelManager.Gravity;
-            while (SubTiles >= 65536) {
+            while (SubTiles >= 65536)
+            {
                 SubTiles -= 65536;
                 TryMove(0, 1);
             }
@@ -155,18 +172,23 @@ namespace MyTetris
         public void Update(GameTime gameTime)
         {
             // Handle user inputs for DAS/ARR
-            if (InputManager.WasKeyJustDown(Keys.Left)) {
+            if (InputManager.WasKeyJustDown(Keys.Left))
+            {
                 AutoRepeatDirection = -1;
                 AutoRepeatDelay = _game.LevelManager.DAS;
             }
-            if (InputManager.WasKeyJustDown(Keys.Right)) {
+            if (InputManager.WasKeyJustDown(Keys.Right))
+            {
                 AutoRepeatDirection = 1;
                 AutoRepeatDelay = _game.LevelManager.DAS;
             }
 
-            if (InputManager.Keyboard.IsKeyDown(Keys.Left) || InputManager.Keyboard.IsKeyDown(Keys.Right)) {
+            if (InputManager.Keyboard.IsKeyDown(Keys.Left) || InputManager.Keyboard.IsKeyDown(Keys.Right))
+            {
                 AutoRepeatDelay--;
-            } else {
+            }
+            else
+            {
                 AutoRepeatDelay = _game.LevelManager.DAS; // Actually it doesn't matter what this value is as long as it's above zero
             }
 
@@ -174,9 +196,10 @@ namespace MyTetris
             if (AppearanceDelay > 0)
             {
                 AppearanceDelay--;
-                // If we just now hit 0 frames then we spawn a new piece
+                // If we just now hit 0 frames then we increment the level and spawn a new piece
                 if (AppearanceDelay == 0)
                 {
+                    _game.LevelManager.SpeedLevel++;
                     SpawnNewPiece();
                 }
                 return;
@@ -194,19 +217,25 @@ namespace MyTetris
                 }
             }
 
-            if (InputManager.WasKeyJustDown(Keys.Left)) {
+            if (InputManager.WasKeyJustDown(Keys.Left))
+            {
                 TryMove(-1, 0); // Shift left
             }
-                
-            if (InputManager.WasKeyJustDown(Keys.Right)) {
+
+            if (InputManager.WasKeyJustDown(Keys.Right))
+            {
                 TryMove(1, 0); // Shift right
             }
 
-            if (AutoRepeatDelay <= 0) {
-                if (_game.LevelManager.ARR == 0) {
+            if (AutoRepeatDelay <= 0)
+            {
+                if (_game.LevelManager.ARR == 0)
+                {
                     // In the specific case that ARR is 0, just move the piece to the side until it hits something
                     while (TryMove(AutoRepeatDirection, 0)) { }
-                } else {
+                }
+                else
+                {
                     TryMove(AutoRepeatDirection, 0);
                     AutoRepeatDelay = _game.LevelManager.ARR;
                 }
@@ -223,8 +252,9 @@ namespace MyTetris
             {
                 while (TryMove(0, 1)) { }
                 LockPiece();
-            } 
-            if (InputManager.WasKeyJustDown(Keys.Space)) { // Hold
+            }
+            if (InputManager.WasKeyJustDown(Keys.Space))
+            { // Hold
                 _game.Hold.SwapHold();
             }
         }

@@ -13,11 +13,11 @@ namespace MyTetris
     public class Button
     {
         public string Text;
-        public Action OnClick;
-        public Button(string text, Action onClick)
+        public Action Update; // Called every update
+        public Action HighlightedUpdate; // Called every update when highlighted
+        public Button(string text)
         {
             Text = text;
-            OnClick = onClick;
         }
         public void Draw(SpriteBatch spriteBatch, Vector2 offset, Color color)
         {

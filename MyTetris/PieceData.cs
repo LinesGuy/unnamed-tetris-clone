@@ -59,7 +59,9 @@ namespace MyTetris {
                 case 0: // I piece
                     return _wallkick_data_i[startOrientation * 2 + rotationDirection];
                 case 3: // O Piece
-                    throw new NotImplementedException("O piece kick table not yet implemented");
+                    // The O piece is defined as having no kick table
+                    return new Point[] { new Point(0, 0) };
+                    // Note to self: there is nothing actually stopping me from adding a kick table anyway :3
                 case 1: // Everything else
                 case 2:
                 case 4:

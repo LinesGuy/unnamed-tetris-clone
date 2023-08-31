@@ -6,14 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyTetris
+namespace MyTetris.GamePlay
 {
     public class NextPieces
     {
         private TetrisGame _game;
         private BagRandomizer _bag = new BagRandomizer();
         public Queue<int> Pieces = new Queue<int>();
-        public NextPieces(TetrisGame game) { 
+        public NextPieces(TetrisGame game)
+        {
             _game = game;
             for (int i = 0; i < 3; i++)
             {
@@ -28,7 +29,7 @@ namespace MyTetris
         public void Draw(SpriteBatch spriteBatch)
         {
             int x_offset = 3;
-            foreach(int piece  in Pieces)
+            foreach (int piece in Pieces)
             {
                 for (int x = 0; x < 4; x++)
                 {

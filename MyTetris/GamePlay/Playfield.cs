@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MyTetris
+namespace MyTetris.GamePlay
 {
     public class PlayField
     {
@@ -55,6 +55,15 @@ namespace MyTetris
             }
             if (linesCleared > 0)
             {
+                if (linesCleared <= 2) {
+                    _game.LevelManager.Increase(linesCleared);
+                } else if (linesCleared == 3) {
+                    _game.LevelManager.Increase(4);
+                } else if (linesCleared == 4) {
+                    _game.LevelManager.Increase(6);
+                } else {
+                    throw new System.Exception("Cleared more than 4 lines at once, should not be possible.");
+                }
                 LineClearFramesToWait = _game.LevelManager.LineClear;
                 return true;
             }
@@ -113,7 +122,8 @@ namespace MyTetris
                     {
                         // Draw the tile based on the piece colour
                         spriteBatch.Draw(Assets.TileBlank_32, Offset + new Vector2(x, y) * TetrisGame.TILE_SIZE, null, PieceData.Colours[id], 0f, Vector2.Zero, 1f, 0, 0);
-                    } else // Draw a background tile
+                    }
+                    else // Draw a background tile
                     {
                         // Only draw the background if we aren't drawing an invisible row
                         if (y < _invisibleRows)

@@ -8,35 +8,37 @@ namespace MyTetris
     public class ButtonGroup
     {
         public List<Button> Buttons = new List<Button>();
-        private int _selectedIndex = 0;
+        private int _highlightedIndex = 0;
         private Vector2 _position;
-        public ButtonGroup(Vector2 position)
+        private Keys _upKey;
+        private Keys _downKey;
+        public ButtonGroup(Vector2 position, Keys up = Keys.Up, Keys down = Keys.Down, Keys left = Keys.Left, Keys right = Keys.Right, Keys select = Keys.Enter)
         {
+            _upKey = up;
+            _downKey = down;
             _position = position;
         }
         public void Update()
         {
-            if (InputManager.WasKeyJustDown(Keys.Up))
+            if (InputManager.WasKeyJustDown(_upKey))
             {
-                _selectedIndex--;
-                if (_selectedIndex < 0 )
+                _highlightedIndex--;
+                if (_highlightedIndex < 0 )
                 {
-                    _selectedIndex = Buttons.Count - 1;
+                    _highlightedIndex = Buttons.Count - 1;
                 }
             }
 
-            if (InputManager.WasKeyJustDown(Keys.Down))
+            if (InputManager.WasKeyJustDown(_downKey))
             {
-                _selectedIndex++;
-                if (_selectedIndex >= Buttons.Count)
+                _highlightedIndex++;
+                if (_highlightedIndex >= Buttons.Count)
                 {
-                    _selectedIndex = 0;
+                    _highlightedIndex = 0;
                 }
             }
-            if (InputManager.WasKeyJustDown(Keys.Enter))
-            {
-                Buttons[_selectedIndex].OnClick();
-            };
+            Buttons[_highlightedIndex].HighlightedUpdate?.Invoke();
+            Buttons.ForEach(b => b.Update?.Invoke());
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -44,7 +46,7 @@ namespace MyTetris
             {
                 // Draw position based on index so the group appears as a vertical list
                 // Colour is white by default but red if it is the currently selected button
-                Buttons[i].Draw(spriteBatch, _position + new Vector2(0, i * 30), i == _selectedIndex ? Color.Red : Color.White);
+                Buttons[i].Draw(spriteBatch, _position + new Vector2(0, i * 30), i == _highlightedIndex ? Color.Red : Color.White);
             }
         }
     }

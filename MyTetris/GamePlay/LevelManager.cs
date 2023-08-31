@@ -1,4 +1,4 @@
-﻿namespace MyTetris
+﻿namespace MyTetris.GamePlay
 {
     public class LevelManager
     {
@@ -73,56 +73,64 @@
                 DAS = 16;
                 Lock = 30;
                 LineClear = 40;
-            } else if (SpeedLevel <= 599)
+            }
+            else if (SpeedLevel <= 599)
             {
                 ARE = 27;
                 LineARE = 27;
                 DAS = 10;
                 Lock = 30;
                 LineClear = 25;
-            } else if (SpeedLevel <= 699)
+            }
+            else if (SpeedLevel <= 699)
             {
                 ARE = 27;
                 LineARE = 18;
                 DAS = 10;
                 Lock = 30;
                 LineClear = 16;
-            } else if (SpeedLevel <= 799)
+            }
+            else if (SpeedLevel <= 799)
             {
                 ARE = 18;
                 LineARE = 14;
                 DAS = 10;
                 Lock = 30;
                 LineClear = 12;
-            } else if (SpeedLevel <= 899)
+            }
+            else if (SpeedLevel <= 899)
             {
                 ARE = 14;
                 LineARE = 8;
                 DAS = 10;
                 Lock = 30;
                 LineClear = 6;
-            } else if (SpeedLevel <= 999)
+            }
+            else if (SpeedLevel <= 999)
             {
                 ARE = 14;
                 LineARE = 8;
                 DAS = 8;
                 Lock = 17;
                 LineClear = 6;
-            } else if (SpeedLevel <= 1099)
+            }
+            else if (SpeedLevel <= 1099)
             {
                 ARE = 8;
                 LineARE = 8;
                 DAS = 8;
                 Lock = 17;
                 LineClear = 6;
-            } else if (SpeedLevel <= 1199)
+            }
+            else if (SpeedLevel <= 1199)
             {
                 ARE = 7;
                 LineARE = 7;
                 DAS = 8;
                 Lock = 15;
                 LineClear = 6;
-            } else // Level >= 1200
+            }
+            else // Level >= 1200
             {
                 ARE = 6;
                 LineARE = 6;

@@ -7,16 +7,16 @@ namespace MyTetris
     public class GameRoot : Game
     {
         public static GameRoot Instance;
-        private GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager Graphics;
         private SpriteBatch _spriteBatch;
         public Point ScreenSize = new Point(1366, 768);
         public GameRoot()
         {
             Instance = this;
-            _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = ScreenSize.X;
-            _graphics.PreferredBackBufferHeight = ScreenSize.Y;
-            _graphics.ApplyChanges();
+            Graphics = new GraphicsDeviceManager(this);
+            Graphics.PreferredBackBufferWidth = ScreenSize.X;
+            Graphics.PreferredBackBufferHeight = ScreenSize.Y;
+            Graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -29,7 +29,7 @@ namespace MyTetris
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(base.GraphicsDevice);
             Assets.Load(Content);
         }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyTetris
+namespace MyTetris.GamePlay
 {
     public class TetrisGame
     {
@@ -18,7 +18,8 @@ namespace MyTetris
         public LevelManager LevelManager;
         public Vector2 Position = new Vector2(50, 50); // The top-left of the visible playfield
         public const float TILE_SIZE = 32f;
-        public TetrisGame() {
+        public TetrisGame()
+        {
             Hold = new Hold(this);
             PlayField = new PlayField(this);
             NextPieces = new NextPieces(this);
@@ -27,7 +28,8 @@ namespace MyTetris
             LevelManager = new LevelManager(this);
             Assets.Go.Play();
         }
-        public void Update(GameTime gameTime) {
+        public void Update(GameTime gameTime)
+        {
             PlayField.Update(gameTime);
             CurrentPiece.Update(gameTime);
         }

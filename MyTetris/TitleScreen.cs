@@ -15,9 +15,9 @@ namespace MyTetris
         public TitleScreen()
         {
             _buttons = new ButtonGroup(new Vector2(50, 200));
-            _buttons.Buttons.Add(new Button("START", () => ScreenManager.Screens.Push(new GameScreen())));
-            // Options button
-            _buttons.Buttons.Add(new Button("EXIT", () => GameRoot.Instance.Exit()));
+            _buttons.Buttons.Add(new Button("START") { HighlightedUpdate = () => ScreenManager.Screens.Push(new GameScreen()) });
+            // TODO add options button here
+            _buttons.Buttons.Add(new Button("EXIT") { HighlightedUpdate = () => { GameRoot.Instance.Exit(); } });
             Assets.Ready.Play();
         }
         public override void Draw(SpriteBatch spriteBatch)
