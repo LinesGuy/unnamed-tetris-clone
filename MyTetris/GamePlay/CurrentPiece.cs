@@ -199,7 +199,9 @@ namespace MyTetris.GamePlay
                 // If we just now hit 0 frames then we increment the level and spawn a new piece
                 if (AppearanceDelay == 0)
                 {
-                    _game.LevelManager.SpeedLevel++;
+                    if (_game.LevelManager.AutoIncrement) {
+                        _game.LevelManager.Increase(1);
+                    }
                     SpawnNewPiece();
                 }
                 return;

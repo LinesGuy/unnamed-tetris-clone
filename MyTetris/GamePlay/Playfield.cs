@@ -55,14 +55,16 @@ namespace MyTetris.GamePlay
             }
             if (linesCleared > 0)
             {
-                if (linesCleared <= 2) {
-                    _game.LevelManager.Increase(linesCleared);
-                } else if (linesCleared == 3) {
-                    _game.LevelManager.Increase(4);
-                } else if (linesCleared == 4) {
-                    _game.LevelManager.Increase(6);
-                } else {
-                    throw new System.Exception("Cleared more than 4 lines at once, should not be possible.");
+                if (_game.LevelManager.AutoIncrement) {
+                    if (linesCleared <= 2) {
+                        _game.LevelManager.Increase(linesCleared);
+                    } else if (linesCleared == 3) {
+                        _game.LevelManager.Increase(4);
+                    } else if (linesCleared == 4) {
+                        _game.LevelManager.Increase(6);
+                    } else {
+                        throw new System.Exception("Cleared more than 4 lines at once, should not be possible.");
+                    }
                 }
                 LineClearFramesToWait = _game.LevelManager.LineClear;
                 return true;

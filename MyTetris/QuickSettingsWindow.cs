@@ -3,11 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MyTetris.GamePlay;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyTetris {
     public class QuickSettingsWindow : Window {
@@ -15,14 +10,39 @@ namespace MyTetris {
         ButtonGroup buttonGroup = new ButtonGroup(new Vector2(5), Keys.NumPad8, Keys.NumPad2, Keys.NumPad4, Keys.NumPad6, Keys.Enter);
         public QuickSettingsWindow(TetrisGame game, Rectangle rect) : base(rect) {
             _game = game;
-            
-            Button speedLevelButton = new Button("< SpeedLevel: null >");
-            speedLevelButton.Update = () => { speedLevelButton.Text = $"< SpeedLevel: {_game.LevelManager.SpeedLevel} >"; };
+            // Change current speed level
+            Button speedLevelButton = new Button("< SpeedLevel: ? >");
             speedLevelButton.HighlightedUpdate = () => {
                 if (InputManager.WasKeyJustDown(Keys.NumPad4)) { _game.LevelManager.Increase(-100); }
                 if (InputManager.WasKeyJustDown(Keys.NumPad6)) { _game.LevelManager.Increase(100); }
             };
+            speedLevelButton.Update = () => { speedLevelButton.Text = $"< SpeedLevel: {_game.LevelManager.SpeedLevel} >"; };
             buttonGroup.Buttons.Add(speedLevelButton);
+            // Change current DAS level and disable AutoIncrement
+            Button dasButton = new Button("< DAS: ? >");
+            dasButton.HighlightedUpdate = () => {
+                if (InputManager.WasKeyJustDown(Keys.NumPad4)) {
+                    _game.LevelManager.DAS = Math.Max(0, _game.LevelManager.DAS - 1);
+                    _game.LevelManager.AutoIncrement = false;
+                }
+                if (InputManager.WasKeyJustDown(Keys.NumPad6)) {
+                    _game.LevelManager.DAS++;
+                    _game.LevelManager.AutoIncrement = false;
+                }
+            };
+            dasButton.Update = () => { dasButton.Text = $"< DAS: {_game.LevelManager.DAS} >"; };
+            buttonGroup.Buttons.Add(dasButton);
+            // Toggle AutoIncrement
+            Button levelIncrementToggle = new Button("Level Increment: ?");
+            levelIncrementToggle.HighlightedUpdate = () => {
+                if (InputManager.WasKeyJustDown(Keys.NumPad4) || InputManager.WasKeyJustDown(Keys.NumPad6) || InputManager.WasKeyJustDown(Keys.Enter)) {
+                    _game.LevelManager.AutoIncrement = !_game.LevelManager.AutoIncrement;
+                }
+            };
+            levelIncrementToggle.Update = () => {
+                levelIncrementToggle.Text = $"Level Increment: {_game.LevelManager.AutoIncrement}";
+            };
+            buttonGroup.Buttons.Add(levelIncrementToggle);
         }
         public override void Update(GameTime gameTime) {
             buttonGroup.Update();

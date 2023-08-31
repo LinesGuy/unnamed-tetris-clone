@@ -14,6 +14,7 @@
         public int Lock = 30; // Frames between the piece touching the floor unmoved and locking in place
         public int LineClear = 40; // Frames taken to clear a line, does not include Lock frames, which are applied after
         public int Gravity = 1024; // 1 gravity = 1/65536 G, 1G = 1 tile per second, 1310720 gravity = 20G
+        public bool AutoIncrement = true; // Whether or not dropping pieces / clearing lines should increment level
         public LevelManager(TetrisGame game)
         {
             _game = game;
