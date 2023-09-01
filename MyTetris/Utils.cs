@@ -11,5 +11,6 @@ namespace MyTetris
     public static class Utils
     {
         public static void DrawStringCentered(this SpriteBatch batch, SpriteFont font, string text, Vector2 position, Color color) => batch.DrawString(font, text, position, color, 0f, font.MeasureString(text) / 2f, 1f, 0, 0);
+        public static Rectangle RectangleF(Vector2 location, Vector2 size) => new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y);
     }
 }

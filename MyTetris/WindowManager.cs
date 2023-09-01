@@ -36,7 +36,7 @@ namespace MyTetris {
                 // Draw window contents
                 GameRoot.Instance.GraphicsDevice.SetRenderTarget(window.RenderTarget);
                 SpriteBatch batch = new SpriteBatch(GameRoot.Instance.GraphicsDevice);
-                batch.Begin();
+                batch.Begin(samplerState: SamplerState.PointClamp);
                 window.Draw(batch);
                 batch.End();
                 // Draw window onto main screen

@@ -55,6 +55,7 @@ namespace MyTetris.GamePlay
             }
             if (linesCleared > 0)
             {
+                Assets.LinesClear.Play();
                 if (_game.LevelManager.AutoIncrement) {
                     if (linesCleared <= 2) {
                         _game.LevelManager.Increase(linesCleared);
@@ -62,6 +63,7 @@ namespace MyTetris.GamePlay
                         _game.LevelManager.Increase(4);
                     } else if (linesCleared == 4) {
                         _game.LevelManager.Increase(6);
+                        Assets.TetrisClear.Play();
                     } else {
                         throw new System.Exception("Cleared more than 4 lines at once, should not be possible.");
                     }
@@ -76,6 +78,7 @@ namespace MyTetris.GamePlay
         /// </summary>
         public void ShiftRowsDown()
         {
+            int rowsShifted = 0;
             for (int i = 0; i < 4; i++)
             {
                 for (int y = Height - 1; y > 0; y--)
@@ -88,6 +91,7 @@ namespace MyTetris.GamePlay
 
                     if (emptyTiles == Width)
                     {
+                        rowsShifted++;
                         for (int sy = y; sy > 0; sy--)
                         {
                             for (int sx = 0; sx < Width; sx++)
@@ -97,6 +101,9 @@ namespace MyTetris.GamePlay
                         }
                     }
                 }
+            }
+            if (rowsShifted > 0) {
+                Assets.LinesFall.Play();
             }
         }
         public void Update(GameTime gameTime)
@@ -114,7 +121,9 @@ namespace MyTetris.GamePlay
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Draw playfield
+            // Draw black background
+            spriteBatch.Draw(Assets.Pixel, new Rectangle((int)Offset.X, (int)Offset.Y + _invisibleRows * TetrisGame.TILE_SIZE, Width  * TetrisGame.TILE_SIZE, (Height - _invisibleRows) * TetrisGame.TILE_SIZE), Color.Black);
+            // Draw tiles
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
@@ -123,15 +132,9 @@ namespace MyTetris.GamePlay
                     if (id >= 0 && id < 7)
                     {
                         // Draw the tile based on the piece colour
-                        spriteBatch.Draw(Assets.TileBlank_32, Offset + new Vector2(x, y) * TetrisGame.TILE_SIZE, null, PieceData.Colours[id], 0f, Vector2.Zero, 1f, 0, 0);
+                        spriteBatch.Draw(Assets.BlockW[id], Utils.RectangleF(Offset + new Vector2(x, y) * TetrisGame.TILE_SIZE, new Vector2(TetrisGame.TILE_SIZE)), Color.White);
                     }
-                    else // Draw a background tile
-                    {
-                        // Only draw the background if we aren't drawing an invisible row
-                        if (y < _invisibleRows)
-                            continue;
-                        spriteBatch.Draw(Assets.TileBlank_32, Offset + new Vector2(x, y) * TetrisGame.TILE_SIZE, null, new Color(64, 64, 64), 0f, Vector2.Zero, 1f, 0, 0);
-                    }
+                    
                 }
             }
         }

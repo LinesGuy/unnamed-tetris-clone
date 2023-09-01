@@ -17,7 +17,7 @@ namespace MyTetris.GamePlay
         public CurrentPiece CurrentPiece;
         public LevelManager LevelManager;
         public Vector2 Position = new Vector2(50, 50); // The top-left of the visible playfield
-        public const float TILE_SIZE = 32f;
+        public const int TILE_SIZE = 32;
         public TetrisGame()
         {
             Hold = new Hold(this);

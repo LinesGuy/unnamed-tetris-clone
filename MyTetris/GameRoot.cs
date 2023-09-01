@@ -43,7 +43,7 @@ namespace MyTetris
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             ScreenManager.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

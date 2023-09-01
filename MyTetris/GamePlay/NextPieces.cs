@@ -36,7 +36,7 @@ namespace MyTetris.GamePlay
                     for (int y = 0; y < 4; y++)
                     {
                         if (PieceData.Tiles[piece, 0][x + y * 4] == '0') continue;
-                        spriteBatch.Draw(Assets.TileBlank_32, _game.Position + new Vector2(x + x_offset, y) * TetrisGame.TILE_SIZE, null, PieceData.Colours[piece], 0f, Vector2.Zero, 1f, 0, 0);
+                        spriteBatch.Draw(Assets.BlockW[piece], Utils.RectangleF(_game.Position + new Vector2(x + x_offset, y) * TetrisGame.TILE_SIZE, new Vector2(TetrisGame.TILE_SIZE)), Color.White);
                     }
                 }
                 x_offset += 5;

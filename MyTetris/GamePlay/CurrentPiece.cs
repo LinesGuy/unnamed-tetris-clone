@@ -214,6 +214,7 @@ namespace MyTetris.GamePlay
                 GroundedFrames++;
                 if (GroundedFrames >= _game.LevelManager.Lock)
                 {
+                    Assets.PieceLock.Play();
                     LockPiece();
                     return;
                 }
@@ -253,6 +254,7 @@ namespace MyTetris.GamePlay
             if (InputManager.WasKeyJustDown(Keys.Up))// Hard drop
             {
                 while (TryMove(0, 1)) { }
+                Assets.PieceLock.Play();
                 LockPiece();
             }
             if (InputManager.WasKeyJustDown(Keys.Space))
@@ -277,7 +279,8 @@ namespace MyTetris.GamePlay
                     {
                         if (PieceData.Tiles[Id, Orientation][x + y * 4] == '0')
                             continue;
-                        spriteBatch.Draw(Assets.TileBlank_32, _game.PlayField.Offset + new Vector2(x + Position.X, y + gy + Position.Y) * TetrisGame.TILE_SIZE, null, PieceData.Colours[Id] * 0.3f, 0f, Vector2.Zero, 1f, 0, 0);
+                        spriteBatch.Draw(Assets.BlockW[Id], Utils.RectangleF(_game.PlayField.Offset + new Vector2(x + Position.X, y + gy + Position.Y) * TetrisGame.TILE_SIZE, new Vector2(TetrisGame.TILE_SIZE)), Color.White * 0.3f);
+
                     }
                 }
             }
@@ -288,7 +291,7 @@ namespace MyTetris.GamePlay
                 {
                     if (PieceData.Tiles[Id, Orientation][x + y * 4] == '0')
                         continue;
-                    spriteBatch.Draw(Assets.TileBlank_32, _game.PlayField.Offset + new Vector2(x + Position.X, y + Position.Y) * TetrisGame.TILE_SIZE, null, PieceData.Colours[Id], 0f, Vector2.Zero, 1f, 0, 0);
+                    spriteBatch.Draw(Assets.BlockW[Id], Utils.RectangleF(_game.PlayField.Offset + new Vector2(x + Position.X, y + Position.Y) * TetrisGame.TILE_SIZE, new Vector2(TetrisGame.TILE_SIZE)), Color.White);
                 }
             }
         }
