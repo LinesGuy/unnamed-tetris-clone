@@ -68,7 +68,11 @@ namespace MyTetris.GamePlay
                     _game.Hold.SwapHold();
                 }
             }
-            Position = new Point(3, 4);
+            if (Id == 0) {
+                Position = new Point(3, 0); // I piece spawns one level higher than the rest of the pieces so it touches the ceiling
+            } else {
+                Position = new Point(3, 1);
+            }
             Orientation = 0;
             GroundedFrames = 0;
             SubTiles = 0;

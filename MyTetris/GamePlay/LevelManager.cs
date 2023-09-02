@@ -6,6 +6,7 @@
         // NOTE that Speed level is not the exact same as the level shown to the player
         // Speed level increases the same as shown level, however clearing a section
         // with a section COOL will increase the speed level by 100, but not the shown level.
+        public int DisplayedLevel = 0;
         public int SpeedLevel = 0;
         public int ARE = 27; // Appearance Delay: Frames between piece locking and new piece appearing
         public int LineARE = 27; // Line Appearance Delay: Same as ARE but used when clearing a line

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -24,6 +25,7 @@ namespace MyTetris
         protected override void Initialize()
         {
             base.Initialize();
+            SoundEffect.MasterVolume = 0.1f;
             ScreenManager.Screens.Push(new TitleScreen());
         }
 

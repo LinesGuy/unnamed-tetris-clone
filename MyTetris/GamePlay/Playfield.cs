@@ -9,14 +9,14 @@ namespace MyTetris.GamePlay
         private TetrisGame _game;
         public int[,] Tiles;
         public int Width = 10;
-        public int Height = 24; // 24 rows minus 4 invisible rows means only the bottom 20 rows will be visible to the player, as is somewhat standard in Tetris
-        private int _invisibleRows = 4;
+        public int Height = 21; // 24 rows minus 4 invisible rows means only the bottom 20 rows will be visible to the player, as is somewhat standard in Tetris
+        private int _invisibleRows = 1;
         public Vector2 Offset; // Offset of the entire playfield
         public int LineClearFramesToWait = 0;
         public PlayField(TetrisGame game)
         {
             _game = game;
-            Offset = game.Position + new Vector2(0, -60);
+            Offset = game.Position + new Vector2(0, 40);
             Tiles = new int[Width, Height];
             for (int x = 0; x < Width; x++)
             {

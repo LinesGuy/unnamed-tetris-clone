@@ -31,12 +31,12 @@ namespace MyTetris.GamePlay
             if (HeldPiece == -1)
             {
                 HeldPiece = _game.CurrentPiece.Id;
-                _game.CurrentPiece.SpawnNewPiece();
+                _game.CurrentPiece.Id = _game.NextPieces.Next();
             }
             else
             {
                 int toHold = _game.CurrentPiece.Id;
-                _game.CurrentPiece.SpawnNewPiece(true);
+                _game.CurrentPiece.Id = HeldPiece;
                 HeldPiece = toHold;
             }
             return true;
