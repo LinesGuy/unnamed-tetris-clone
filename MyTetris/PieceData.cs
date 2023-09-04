@@ -25,24 +25,25 @@ namespace MyTetris {
         };
         // X CW (Y) -> Starting orientation X, ClockWise, (Ending orientation Y). Note CCW = CounterClockWise
         private static Point[][] _wallkick_data_jltsz = {
-            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1, 1), new Point(0,-2), new Point(-1,-2) }, // 0 CCW (3)
             new Point[]{ new Point(0, 0), new Point( 1, 0), new Point( 1, 1), new Point(0,-2), new Point( 1,-2) }, // 0 CW  (1)
-            new Point[]{ new Point(0, 0), new Point( 1, 0), new Point( 1,-1), new Point(0, 2), new Point( 1, 2) }, // 1 CCW (0)
+            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1, 1), new Point(0,-2), new Point(-1,-2) }, // 0 CCW (3)
             new Point[]{ new Point(0, 0), new Point( 1, 0), new Point( 1,-1), new Point(0, 2), new Point( 1, 2) }, // 1 CW  (2)
-            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1, 1), new Point(0,-2), new Point(-1,-2) }, // 2 CCW (1)
+            new Point[]{ new Point(0, 0), new Point( 1, 0), new Point( 1,-1), new Point(0, 2), new Point( 1, 2) }, // 1 CCW (0)
             new Point[]{ new Point(0, 0), new Point( 1, 0), new Point( 1, 1), new Point(0,-2), new Point( 1,-2) }, // 2 CW  (3)
-            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1,-1), new Point(0, 2), new Point(-1, 2) }, // 3 CCW (2)
-            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1,-1), new Point(0, 2), new Point(-1, 2) }  // 3 CW  (0)
+            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1, 1), new Point(0,-2), new Point(-1,-2) }, // 2 CCW (1)
+            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1,-1), new Point(0, 2), new Point(-1, 2) },  // 3 CW  (0)
+            new Point[]{ new Point(0, 0), new Point(-1, 0), new Point(-1,-1), new Point(0, 2), new Point(-1, 2) } // 3 CCW (2)
+            
         };
         private static Point[][] _wallkick_data_i = {
-            new Point[]{ new Point(0, 0), new Point(-2, 0), new Point( 1, 0), new Point(-2,-1), new Point( 1, 2) }, // 0 CCW (3)
             new Point[]{ new Point(0, 0), new Point(-1, 0), new Point( 2, 0), new Point(-1, 2), new Point( 2,-1) }, // 0 CW  (1)
-            new Point[]{ new Point(0, 0), new Point( 2, 0), new Point(-1, 0), new Point( 2, 1), new Point(-1,-2) }, // 1 CCW (0)
+            new Point[]{ new Point(0, 0), new Point(-2, 0), new Point( 1, 0), new Point(-2,-1), new Point( 1, 2) }, // 0 CCW (3)
             new Point[]{ new Point(0, 0), new Point(-1, 0), new Point( 2, 0), new Point(-1, 2), new Point( 2,-1) }, // 1 CW  (2)
-            new Point[]{ new Point(0, 0), new Point( 1, 0), new Point(-2, 0), new Point( 1,-2), new Point(-2, 1) }, // 2 CCW (1)
+            new Point[]{ new Point(0, 0), new Point( 2, 0), new Point(-1, 0), new Point( 2, 1), new Point(-1,-2) }, // 1 CCW (0)
             new Point[]{ new Point(0, 0), new Point( 2, 0), new Point(-1, 0), new Point( 2, 1), new Point(-1,-2) }, // 2 CW  (3)
-            new Point[]{ new Point(0, 0), new Point(-2, 0), new Point(-1, 0), new Point(-2,-1), new Point( 1, 2) }, // 3 CCW (2)
-            new Point[]{ new Point(0, 0), new Point( 1, 0), new Point(-2, 0), new Point( 1,-2), new Point(-2, 1) }  // 3 CW  (0)
+            new Point[]{ new Point(0, 0), new Point( 1, 0), new Point(-2, 0), new Point( 1,-2), new Point(-2, 1) }, // 2 CCW (1)
+            new Point[]{ new Point(0, 0), new Point( 1, 0), new Point(-2, 0), new Point( 1,-2), new Point(-2, 1) },  // 3 CW  (0)
+            new Point[]{ new Point(0, 0), new Point(-2, 0), new Point(-1, 0), new Point(-2,-1), new Point( 1, 2) } // 3 CCW (2)
         };
         /// <summary>
         /// Gets the array of kicks to try for the given piece id, starting orientation (0-3) and direction of rotation (-1 or 1).

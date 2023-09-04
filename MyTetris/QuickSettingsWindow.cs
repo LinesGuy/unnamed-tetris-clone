@@ -18,6 +18,7 @@ namespace MyTetris {
             };
             speedLevelButton.Update = () => { speedLevelButton.Text = $"< SpeedLevel: {_game.LevelManager.SpeedLevel} >"; };
             buttonGroup.Buttons.Add(speedLevelButton);
+
             // Change current DAS level and disable AutoIncrement
             Button dasButton = new Button("< DAS: ? >");
             dasButton.HighlightedUpdate = () => {
@@ -32,6 +33,17 @@ namespace MyTetris {
             };
             dasButton.Update = () => { dasButton.Text = $"< DAS: {_game.LevelManager.DAS} >"; };
             buttonGroup.Buttons.Add(dasButton);
+
+            // Toggle disabling auto piece locking
+            Button lockButton = new Button("AutoPieceLock: ?");
+            lockButton.HighlightedUpdate = () => {
+                if (InputManager.WasKeyJustDown(Keys.NumPad4) || InputManager.WasKeyJustDown(Keys.NumPad6) || InputManager.WasKeyJustDown(Keys.Enter)) {
+                    _game.CurrentPiece.AutoPieceLock = !_game.CurrentPiece.AutoPieceLock;
+                }
+            };
+            lockButton.Update = () => { lockButton.Text = $"AutoPieceLock: {_game.CurrentPiece.AutoPieceLock}"; };
+            buttonGroup.Buttons.Add(lockButton);
+
             // Toggle AutoIncrement
             Button levelIncrementToggle = new Button("Level Increment: ?");
             levelIncrementToggle.HighlightedUpdate = () => {

@@ -11,6 +11,7 @@ namespace MyTetris.GamePlay
         public int Id;
         public int Orientation;
         public int SubTiles; // Used in gravity calculations, 65536 sub-tiles = 1 full tile
+        public bool AutoPieceLock = true; // Whether or not pieces will automatically lock after touching the ground for a while
         public int GroundedFrames; // Number of frames the piece has been touching the ground without moving
         public int AppearanceDelay; // The number of frames to wait until spawning the next piece. If this is 0 then the piece is active and can be moved, if this is above 0 then the player will not be able to move any piece.
         public int AutoRepeatDelay; // The number of frames until piece is auto shifted. Resets to DAS upon user pressing left or right. Resets to ARR upon reaching zero. Decrements while left or right is held.
@@ -211,27 +212,18 @@ namespace MyTetris.GamePlay
                 return;
             }
 
-            ApplyGravity();
-            // Check if we are touching the ground
-            if (!CanFit(Position.X, Position.Y + 1, Orientation))
-            {
-                GroundedFrames++;
-                if (GroundedFrames >= _game.LevelManager.Lock)
-                {
-                    Assets.PieceLock.Play();
-                    LockPiece();
-                    return;
-                }
-            }
-
             if (InputManager.WasKeyJustDown(Keys.Left))
             {
-                TryMove(-1, 0); // Shift left
+                if (TryMove(-1, 0)) {
+                    GroundedFrames = 0;
+                }
             }
 
             if (InputManager.WasKeyJustDown(Keys.Right))
             {
-                TryMove(1, 0); // Shift right
+                if (TryMove(1, 0)) {
+                    GroundedFrames = 0;
+                }
             }
 
             if (AutoRepeatDelay <= 0)
@@ -252,6 +244,17 @@ namespace MyTetris.GamePlay
                 TryRotate(-1);
             if (InputManager.WasKeyJustDown(Keys.X)) // CW rotation
                 TryRotate(1);
+
+            ApplyGravity();
+            // Check if we are touching the ground
+            if (!CanFit(Position.X, Position.Y + 1, Orientation) && AutoPieceLock) {
+                GroundedFrames++;
+                if (GroundedFrames >= _game.LevelManager.Lock) {
+                    Assets.PieceLock.Play();
+                    LockPiece();
+                    return;
+                }
+            }
 
             if (InputManager.Keyboard.IsKeyDown(Keys.Down)) // Soft drop
                 TryMove(0, 1);
